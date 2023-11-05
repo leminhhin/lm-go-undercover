@@ -139,9 +139,10 @@ class Environment:
                     if not self.terminal:
                         self._moderator_announce("Game continues.")
                         self._update_phase(GamePhase.DESCRIPTION)
+                        self.vote_manager = VoteManager(self.agents)
                     else:
+                        self._anncounce_winner(terminal_status)
                         return
-                self.vote_manager = VoteManager(self.agents)
 
         else:
             # guessing message is private, only themselves can see
@@ -158,12 +159,15 @@ class Environment:
                 )
                 self._moderator_announce(f"Agent {agent} is eliminated.")
                 self.agents.remove(agent)
+
                 terminal_status = self._check_terminal()
                 self.terminal = any(terminal_status.values())
                 if not self.terminal:
                     self._moderator_announce("Game continues.")
                     self._update_phase(GamePhase.DESCRIPTION)
+                    self.vote_manager = VoteManager(self.agents)
                 else:
+                    self._anncounce_winner(terminal_status)
                     return
 
     def get_current_agent(self) -> str:
@@ -176,11 +180,11 @@ class Environment:
         if self.phase != GamePhase.GUESSING:
             # If not in the guessing phase, pick the next agent in a round-robin fashion
             next_agent = self.agents[self.current_agent_index]
+            self.current_agent_index = (self.current_agent_index + 1) % len(self.agents)
         else:
             # If in the guessing phase, the next agent is Mr. White
             next_agent = self.role_to_agents[GameRole.MRWHITE][0]
 
-        self.current_agent_index = (self.current_agent_index + 1) % len(self.agents)
 
         return next_agent
 
@@ -311,3 +315,24 @@ class Environment:
             bool: True if the guessing string matches the keyword of the civilian role, False otherwise.
         """
         return guessing.strip().lower() == self.role_to_keyword[GameRole.CIVILIAN]
+
+    def _anncounce_winner(self, terminal_status: Dict[GameRole, bool]) -> None:
+        """
+        Announces the winner of the game.
+
+        Args:
+            terminal_status (Dict[GameRole, bool]): A dictionary mapping game roles to booleans indicating if the role wins.
+
+        Returns:
+            None
+        """
+        if terminal_status[GameRole.CIVILIAN]:
+            self._moderator_announce("All undercover and Mr. White are eliminated. Civilians win!")
+        elif terminal_status[GameRole.UNDERCOVER] and terminal_status[GameRole.MRWHITE]:
+            self._moderator_announce("All civilians are eliminated. Undercover and Mr. White win!")
+        elif terminal_status[GameRole.UNDERCOVER]:
+            self._moderator_announce("All civilians are eliminated. Undercover wins!")
+        elif terminal_status[GameRole.MRWHITE]:
+            self._moderator_announce("All civilians are eliminated. Mr. White wins!")
+        else:
+            raise ValueError("Invalid terminal status.")
