@@ -98,3 +98,47 @@ class MessagePool:
             ):
                 messages.append(message)
         return messages
+
+class VoteManager:
+    """
+    A class that manages votes from different agents.
+
+    Attributes:
+        votes (dict): A dictionary that stores the vote count for each agent.
+    """
+
+    def __init__(self, agents: List[str]) -> None:
+        """
+        Initializes the VoteManager object with a list of agents.
+
+        Args:
+            agents (List[str]): A list of agent names.
+
+        Returns:
+            None
+        """
+        self.votes = {
+            agent.strip().capitalize(): 0 for agent in agents
+        }
+    
+    def add_vote(self, agent: str) -> None:
+        """
+        Adds a vote for a specific agent.
+
+        Args:
+            agent (str): The name of the agent.
+
+        Returns:
+            None
+        """
+        agent = agent.strip().capitalize()
+        self.votes[agent] += 1
+
+    def get_eliminatable_agent(self) -> str:
+        """
+        Returns the agent with the highest number of votes.
+
+        Returns:
+            str: The name of the agent with the highest number of votes.
+        """
+        return max(self.votes, key=self.votes.get)

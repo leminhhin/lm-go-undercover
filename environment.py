@@ -1,6 +1,7 @@
 import random
-from typing import List, Tuple, Optional
-from utils import MessagePool, VoteManager, GamePhase, GameRole
+from typing import Dict, List, Optional, Tuple
+
+from utils import GamePhase, GameRole, MessagePool, VoteManager
 
 NUM_TO_ROLES = {
     # num of agents: (num of civilian, num of undercover, num of mr.white)
@@ -113,7 +114,57 @@ class Environment:
         Returns:
             None
         """
-        pass
+        if self.phase in [GamePhase.DESCRIPTION, GamePhase.DISCUSSION]:
+            # description and discussion message is public
+            self.message_pool.add_message(agent, action, self.agents)
+            if self.current_agent_index % len(self.agents) == 0:
+                self._update_phase(GamePhase(self.phase.value + 1))
+
+        elif self.phase == GamePhase.VOTING:
+            # voting message is private, only themselves can see
+            self.message_pool.add_message(agent, action, [agent])
+            self.vote_manager.add_vote(action)
+
+            if self.current_agent_index % len(self.agents) == 0:
+                eliminated_agent = self.vote_manager.get_eliminated_agent()
+
+                if eliminated_agent in self.role_to_agents[GameRole.MRWHITE]:
+                    self._update_phase(GamePhase.GUESSING)
+                else:
+                    self._moderator_announce(f"Agent {eliminated_agent} is eliminated.")
+                    self.agents.remove(eliminated_agent)
+
+                    terminal_status = self._check_terminal()
+                    self.terminal = any(terminal_status.values())
+                    if not self.terminal:
+                        self._moderator_announce("Game continues.")
+                        self._update_phase(GamePhase.DESCRIPTION)
+                    else:
+                        return
+                self.vote_manager = VoteManager(self.agents)
+
+        else:
+            # guessing message is private, only themselves can see
+            self.message_pool.add_message(agent, action, [agent])
+
+            if self._check_guessing(action):
+                self._moderator_announce(
+                    f"Agent {agent} guessed the keyword correctly! Mr. White wins!"
+                )
+                self.terminal = True
+            else:
+                self._moderator_announce(
+                    f"Agent {agent} is Mr. White, but guessed the keyword incorrectly."
+                )
+                self._moderator_announce(f"Agent {agent} is eliminated.")
+                self.agents.remove(agent)
+                terminal_status = self._check_terminal()
+                self.terminal = any(terminal_status.values())
+                if not self.terminal:
+                    self._moderator_announce("Game continues.")
+                    self._update_phase(GamePhase.DESCRIPTION)
+                else:
+                    return
 
     def get_current_agent(self) -> str:
         """
@@ -122,7 +173,16 @@ class Environment:
         Returns:
             str: The current agent.
         """
-        pass
+        if self.phase != GamePhase.GUESSING:
+            # If not in the guessing phase, pick the next agent in a round-robin fashion
+            next_agent = self.agents[self.current_agent_index]
+        else:
+            # If in the guessing phase, the next agent is Mr. White
+            next_agent = self.role_to_agents[GameRole.MRWHITE][0]
+
+        self.current_agent_index = (self.current_agent_index + 1) % len(self.agents)
+
+        return next_agent
 
     def export(self, path: str) -> None:
         """
@@ -148,7 +208,7 @@ class Environment:
 
             f.write(export_string)
 
-    def _check_terminal(self) -> List[bool]:
+    def _check_terminal(self) -> Dict[GameRole, bool]:
         """
         Checks if the game is in a terminal state.
 
@@ -189,7 +249,18 @@ class Environment:
         Returns:
             None
         """
-        pass
+        phase_messages = {
+            GamePhase.DESCRIPTION: "Game enters description phase. Each agent describes their keyword in one phrase or a word. Do not explicitly mention your keyword. The description should be ambiguous enough such that it's easy for your allies to understand, but hard for enemies to guess.",
+            GamePhase.DISCUSSION: "Game enters discussion phase. Each agent discusses with each other to find the undercover and Mr. White. If you are an undercover or Mr. White, try to blend in.",
+            GamePhase.VOTING: "Game enters voting phase. Each agent votes for the agent they think is the undercover or Mr. White. The agent with the most votes is eliminated. Just type the name of the agent you want to vote for.",
+            GamePhase.GUESSING: "Game enters guessing phase. Mr. White has one chance to guess the keyword. Just type the keyword you think is the civilian's keyword."
+        }
+    
+        if new_phase not in phase_messages:
+            raise ValueError(f"Invalid game phase {new_phase}")
+    
+        self._moderator_announce(phase_messages[new_phase])
+        self.phase = new_phase
     
     def _assign_roles(self) -> None:
         """
@@ -229,3 +300,14 @@ class Environment:
 
         self.message_pool.add_message("Moderator", message, receiver)
 
+    def _check_guessing(self, guessing: str) -> bool:
+        """
+        Check if the given guessing string matches the keyword of the civilian role in the game.
+
+        Args:
+            guessing (str): The guessing string to be checked.
+
+        Returns:
+            bool: True if the guessing string matches the keyword of the civilian role, False otherwise.
+        """
+        return guessing.strip().lower() == self.role_to_keyword[GameRole.CIVILIAN]
