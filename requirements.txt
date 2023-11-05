@@ -1,0 +1,6 @@
+openai
+outlines
+datasets
+transformers
+pyyaml
+bs4
