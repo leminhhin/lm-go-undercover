@@ -58,7 +58,7 @@ To generate an observation, the message pool collects all messages visible to an
 
 The `example.py` script provides a simple demonstration of the game simulator with a sample conversation between 5 LLM agents.
 
-The `logs/example.txt` file shows the message logs from an example game simulation. Some highlights:
+The `logs/example.txt` file shows the message logs from an example game simulation.
 
 ## Usage
 
