@@ -12,7 +12,7 @@ This project aims to simulate and analyze how LLMs play the social deduction gam
 
 ## Game Rules
 
-[Undercover](https://www.yanstarstudio.com) is a wordplay social deduction game.
+[Undercover](https://www.yanstarstudio.com) is an exciting and addictive social deduction word game to play with friends.
 
 There are three roles:
 
