@@ -1,0 +1,64 @@
+----------Game Setting----------
+Agents: ['Alice', 'Bob', 'Charlie', 'David', 'Eve']
+Roles: {<GameRole.CIVILIAN: 0>: ['Bob', 'David', 'Eve'], <GameRole.UNDERCOVER: 1>: ['Alice'], <GameRole.MRWHITE: 2>: ['Charlie']}
+Civilian keyword: openai
+Undercover keyword: chatgpt
+
+
+----------Conversation----------
+Moderator -> ['Bob', 'Charlie', 'Eve']: The game Undercover starts!
+Moderator -> ['Bob', 'David', 'Eve']: Your role is civilian. Your keyword is *openai*. Your goal is to find other civilians, eliminate the undercover and Mr. White, while keeping your role and keyword unrevealed.
+Moderator -> ['Alice']: Your role is undercover. Your keyword is *chatgpt*. Your goal is to blend in, survive till the end, while keeping your role and keyword unrevealed.
+Moderator -> ['Charlie']: Your role is Mr. White. You do not have a keyword. Your goal is to blend in, survive till the end, keeping your role unrevealed and try to catch the civilian's keyword.
+Moderator -> ['Bob', 'Charlie', 'Eve']: Game enters description phase. Each agent describes their keyword in one phrase or a word. Do not explicitly mention your keyword. The description should be ambiguous enough such that it's easy for your allies to understand, but hard for enemies to guess.
+Alice -> ['Bob', 'Charlie', 'Eve']: An AI developed by OpenAI for generating human-like text.
+Bob -> ['Bob', 'Charlie', 'Eve']: A research project focused on advancing artificial intelligence.
+Charlie -> ['Bob', 'Charlie', 'Eve']: A sophisticated language processor capable of generating coherent sentences.
+David -> ['Bob', 'Charlie', 'Eve']: An innovative platform that perfects machine learning techniques.
+Eve -> ['Bob', 'Charlie', 'Eve']: A groundbreaking technology that's transforming the field of AI.
+Moderator -> ['Bob', 'Charlie', 'Eve']: Game enters discussion phase. Each agent discusses with each other to find the undercover and Mr. White. If you are an undercover or Mr. White, try to blend in.
+Alice -> ['Bob', 'Charlie', 'Eve']: With all these talks of artificial intelligence and language processing, it seems like we're at a tech conference instead of playing a game! Can anyone shed some light on their descriptions? They seem rather direct to me.
+Bob -> ['Bob', 'Charlie', 'Eve']: That's fair Alice, but remember we're trying to be cryptic too. We're all in a field of technological innovation, specifically something that's shaping the future of artificial intelligence. I hope that adds a bit of clarity without revealing too
+Charlie -> ['Bob', 'Charlie', 'Eve']: Indeed, Bob, we need to maintain ambiguity. My statement essentially represents an advanced capability in language comprehension and generation. It's remarkable but doesn't diverge from the realm of AI. Wondering if we all share something in common here?</
+David -> ['Bob', 'Charlie', 'Eve']: Charlie, interesting point. Given our descriptions, it seems like we indeed have a shared theme here. My keyword represents something pioneering in the machine learning domain. It's certainly at the frontier of the tech revolution, like everyone's hints suggest.</
+Eve -> ['Bob', 'Charlie', 'Eve']: Agreed, we're all dealing with some revolutionary tech here. My hint speaks to something innovative too, specifically within AI. This technology is changing the game and shaping the future in unpredictable ways. Let's follow this thread and see where it
+Moderator -> ['Bob', 'Charlie', 'Eve']: Game enters voting phase. Each agent votes for the agent they think is the undercover or Mr. White. The agent with the most votes is eliminated. Just type the name of the agent you want to vote for.
+Alice -> ['Alice']: Bob
+Bob -> ['Bob']: David
+Charlie -> ['Charlie']: David
+David -> ['David']: I'll vote for Alice
+Eve -> ['Eve']: David
+Moderator -> ['Bob', 'Charlie', 'Eve']: Agent David is eliminated.
+Moderator -> ['Bob', 'Charlie', 'Eve']: Game continues.
+Moderator -> ['Bob', 'Charlie', 'Eve']: Game enters description phase. Each agent describes their keyword in one phrase or a word. Do not explicitly mention your keyword. The description should be ambiguous enough such that it's easy for your allies to understand, but hard for enemies to guess.
+Alice -> ['Bob', 'Charlie', 'Eve']: A conversational model capable of providing detailed and structured responses.
+Bob -> ['Bob', 'Charlie', 'Eve']: I have nothing to say.
+Charlie -> ['Bob', 'Charlie', 'Eve']: I have nothing to say.
+Eve -> ['Bob', 'Charlie', 'Eve']: I have nothing to say.
+Moderator -> ['Bob', 'Charlie', 'Eve']: Game enters discussion phase. Each agent discusses with each other to find the undercover and Mr. White. If you are an undercover or Mr. White, try to blend in.
+Alice -> ['Bob', 'Charlie', 'Eve']: Isn't it peculiar how Bob, Charlie, and Eve suddenly have nothing to say? I find it a bit suspicious. What do you think, everyone?
+Bob -> ['Bob', 'Charlie', 'Eve']: Interesting observation, Alice. Maybe they're just being cautious not to reveal too much, or perhaps they are indeed hiding something. However, let's remember to stay suspicious of everyone and not jump to conclusions too quickly. The game's far from
+Charlie -> ['Bob', 'Charlie', 'Eve']: Bob, I agree with your point about not jumping to conclusions too swiftly. It's a difficult game, and sometimes we need to play it safe rather than offering insights that may inadvertently confuse our allies or unveil us to the enemies. Let's
+Eve -> ['Bob', 'Charlie', 'Eve']: I understand why it might seem suspicious, Alice. In this case, I thought it would be best not to provide another description that could potentially confuse the situation. However, the need for caution should not be confused with deceptiveness. Let's
+Moderator -> ['Bob', 'Charlie', 'Eve']: Game enters voting phase. Each agent votes for the agent they think is the undercover or Mr. White. The agent with the most votes is eliminated. Just type the name of the agent you want to vote for.
+Alice -> ['Alice']: Charlie
+Bob -> ['Bob']: Alice
+Charlie -> ['Charlie']: I have nothing to say.
+Eve -> ['Eve']: I have nothing to say.
+Moderator -> ['Bob', 'Charlie', 'Eve']: Agent Alice is eliminated.
+Moderator -> ['Bob', 'Charlie', 'Eve']: Game continues.
+Moderator -> ['Bob', 'Charlie', 'Eve']: Game enters description phase. Each agent describes their keyword in one phrase or a word. Do not explicitly mention your keyword. The description should be ambiguous enough such that it's easy for your allies to understand, but hard for enemies to guess.
+Bob -> ['Bob', 'Charlie', 'Eve']: I have nothing to say.
+Charlie -> ['Bob', 'Charlie', 'Eve']: I have nothing to say.
+Eve -> ['Bob', 'Charlie', 'Eve']: An intelligent system that pushes the boundaries of AI capabilities.
+Moderator -> ['Bob', 'Charlie', 'Eve']: Game enters discussion phase. Each agent discusses with each other to find the undercover and Mr. White. If you are an undercover or Mr. White, try to blend in.
+Bob -> ['Bob', 'Charlie', 'Eve']: Seeing as Charlie and I chose to remain silent again, Eve's new hint certainly stands out. Notably, the mention of pushing boundaries could still relate to our common theme. So far, no one has starkly deviated from this pattern
+Charlie -> ['Bob', 'Charlie', 'Eve']: I have nothing to say.
+Eve -> ['Bob', 'Charlie', 'Eve']: True, Bob, despite the change in my approach, my hint still aligns with our common theme. It's interesting to note how our strategies to uncover who's who are evolving as the game progresses. Let's keep our minds 'open
+Moderator -> ['Bob', 'Charlie', 'Eve']: Game enters voting phase. Each agent votes for the agent they think is the undercover or Mr. White. The agent with the most votes is eliminated. Just type the name of the agent you want to vote for.
+Bob -> ['Bob']: I have nothing to say.
+Charlie -> ['Charlie']: Eve
+Eve -> ['Eve']: Charlie
+Moderator -> ['Bob', 'Charlie', 'Eve']: Game enters guessing phase. Mr. White has one chance to guess the keyword. Just type the keyword you think is the civilian's keyword.
+Charlie -> ['Charlie']: OpenAI
+Moderator -> ['Bob', 'Charlie', 'Eve']: Agent Charlie guessed the keyword correctly! Mr. White wins!
