@@ -132,9 +132,10 @@ class VoteManager:
             None
         """
         agent = agent.strip().capitalize()
-        self.votes[agent] += 1
+        if agent in self.votes:
+            self.votes[agent] += 1
 
-    def get_eliminatable_agent(self) -> str:
+    def get_eliminated_agent(self) -> str:
         """
         Returns the agent with the highest number of votes.
 
